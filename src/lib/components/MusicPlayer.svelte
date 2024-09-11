@@ -1,13 +1,15 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
 
-    export let src: string;
     let isPlaying: boolean = false;
     let audioElemnt: HTMLAudioElement;
     let currntTime: number = 0;
     let duration: number = 0;
     let audioUrl = '';
     let loaded = false;
+    let musicData: any;
+    
+    $: $playing_song, fetchAudio();
 
     function secondsToMinutes(seconds: number): string {
         const minutes = Math.floor(seconds / 60); // Get the number of minutes
@@ -16,21 +18,40 @@
     }
 
     //work arround for my backend cause it can only send hole mp3 file not partial content
-    async function fetchAudio(src: string) {
-        loaded = false
+    async function fetchAudio() {
+        loaded = false;
         try {
             
-            const res = await fetch(new URL(src));
+            const res = await fetch(`http://localhost:8080/api/music/play/${$playing_song}`);
             if (!res.ok) {
                 throw new Error("error fetching audio")
             }
+            
             const audioBlob = await res.blob();
             audioUrl = URL.createObjectURL(audioBlob);
+
+            await fetchMusicData();
+
             loaded = true;
             isPlaying = true;
         } catch (error){
             console.error('There was a problem with the fetch operation:', error);
             loaded = false
+        }
+    }
+
+    async function fetchMusicData() {
+        try {
+            
+            const res = await fetch(`http://localhost:8080/api/music/${$playing_song}`);
+            if (!res.ok) {
+                throw new Error("error fetching audio")
+            }
+            musicData = await res.json();
+            
+        } catch (error){
+            console.error('There was a problem with the fetch operation:', error);
+            
         }
     }
 
@@ -67,9 +88,8 @@
         } 
     }
 
-    $: fetchAudio(src);
-
-        import { onMount, onDestroy } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
+    import { playing_song } from "../stores";
     onMount(() => {
         window.addEventListener('keydown', handleInput);
     });
@@ -80,7 +100,8 @@
 </script>
 
 <main>
-    <div class="p-2 w-fit h-fit rounded-md  text-white bg-gray-900">
+    
+    <div class=" pointer-events-auto p-2  w-fit rounded-t-md hover:h-52 h-28  text-white bg-primary  transition-all">
         <audio
         bind:this={audioElemnt}
         on:loadedmetadata={handleMetaData}
@@ -95,10 +116,10 @@
                     <button on:click={togglePlay} class="text-center">
                         {#if !isPlaying}
                             
-                            <Icon icon="mdi:play-outline" class="size-10 hover:size-16 transition-all m-3 hover:m-0"/>
+                            <Icon icon="mdi:play-outline" class="size-10 hover:size-16 transition-all m-3 hover:m-0 hover:text-secondary"/>
                             
                         {:else}
-                            <Icon icon="material-symbols:pause-outline" class="size-10 hover:size-16 transition-all m-3 hover:m-0"/>
+                            <Icon icon="material-symbols:pause-outline" class="size-10 hover:size-16 transition-all m-3 hover:m-0 hover:text-secondary"/>
                         {/if}
                         
                     </button>
@@ -117,6 +138,13 @@
                 <input type="range" min="0" max={duration} value={currntTime} on:input={handleSeek} class="w-60 slider"/>
                 <p class="mx-2">{secondsToMinutes(duration)}</p>
             </div>
+            <br>
+            {#if loaded}
+                <p>{musicData.title}</p>
+                <p>{musicData.artist}</p>
+            {/if}
+            
+            
             
         </div>
     </div>

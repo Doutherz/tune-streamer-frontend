@@ -52,7 +52,7 @@
 
 <main>
 
-    <div class="p-5 border-4 border-black">
+    <div class="p-5 m-5">
         {#if music && playlist}
             <h1>{playlist.name}</h1>
             <p>Number of songs: {music.length}</p>

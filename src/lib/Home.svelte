@@ -4,12 +4,15 @@
     import SearchBar from './components/SearchBar.svelte';
     import { playing_song } from './stores';
     let playlist_id = 4;
-    let url = '';
-    $: url = `http://localhost:8080/api/music/play/${$playing_song}`;
 
 </script>
 <main>
-    <MusicPlayer src={url}/>
+    
     <Playlist playlist_id={playlist_id}/>
     <SearchBar/>
+    <div class=" absolute bottom-0 w-full pointer-events-none">
+        <div class="flex justify-center">
+            <MusicPlayer/>
+        </div>
+    </div>
 </main>

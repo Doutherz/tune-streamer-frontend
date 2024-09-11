@@ -6,17 +6,17 @@ export default {
   ],
   theme: {
     extend: {
-      extend: {
-        colors: {
-          primary: '#1D4ED8', // Blue
-          secondary: '#F97316', // Orange
-          accent: '#FBBF24', // Yellow
-          background: '#F9FAFB', // Light Gray
-          text: '#111827' // Dark Gray
-        }
+      backgroundImage: {
+        'custom-svg': "url('src/assets/layered-waves-haikei.svg')",
+      },
+      colors: {
+        primary: '#001220', // off white
+        secondary: '#80ffdb', // Orange
+        accent: '#2166c4', // Red
+        background: '#f5f5f5', // white
+        border: '#0f0b0b',
       }
     },
   },
   plugins: [],
 }
-
