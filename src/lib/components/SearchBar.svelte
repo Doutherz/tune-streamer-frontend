@@ -29,16 +29,19 @@
         <Icon icon="ion:search" class="size-12 p-3"/>
         <input type="text" bind:value={query} on:input={search_music} class="border-b-2 border-black mx-2 select-all outline-none bg-white/0">
     </div>
-    {#if loaded}
+    <div>
+        {#if loaded}
         {#each search_results as song (song.id)}
             <div class="flex items-center">
                 <Song song={song}/>
             </div>     
         {/each}
-    {:else if query === ""}
-            <div></div>
-    {:else}
-        <Icon icon="svg-spinners:12-dots-scale-rotate" class="size-20"/>
-    {/if}
+        {:else if query === ""}
+                <div></div>
+        {:else}
+            <Icon icon="svg-spinners:12-dots-scale-rotate" class="size-20"/>
+        {/if}
+    </div>
+    
     
 </main>
