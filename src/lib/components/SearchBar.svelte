@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { apiUrl } from '../../config';
     import Song from './Song.svelte';
     import Icon from '@iconify/svelte';
 
@@ -10,7 +11,7 @@
         loaded = false;
         if (query === "") {return}
         try {
-            const res = await fetch(`http://localhost:8080/api/music/search?q=${query}`);
+            const res = await fetch(`${apiUrl}/api/music/search?q=${query}`);
             if (!res.ok) {
                 throw new Error("error fetching search results")
             }
@@ -29,7 +30,7 @@
         <Icon icon="ion:search" class="size-12 p-3"/>
         <input type="text" bind:value={query} on:input={search_music} class="border-b-2 border-black mx-2 select-all outline-none bg-white/0">
     </div>
-    <div>
+    <div class="">
         {#if loaded}
         {#each search_results as song (song.id)}
             <div class="flex items-center">

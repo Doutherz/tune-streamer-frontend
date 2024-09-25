@@ -2,11 +2,12 @@
     import Icon from "@iconify/svelte";
     import { onMount } from 'svelte';
     import Song from './Song.svelte';
+    import { apiUrl } from "../../config";
     export let playlist_id: number;
     let playlist: any;
     let music: any;
-    $: url_playlist = "http://localhost:8080/api/playlists/".concat(playlist_id.toString());
-    $: url_playlist_music = "http://localhost:8080/api/playlists/".concat(playlist_id.toString()).concat("/music");
+    $: url_playlist = `${apiUrl}/api/playlists/`.concat(playlist_id.toString());
+    $: url_playlist_music = `${apiUrl}/api/playlists/`.concat(playlist_id.toString()).concat("/music");
 
     async function fetchPlaylist() {
         try {

@@ -1,5 +1,6 @@
 <script lang="ts">
     import Icon from "@iconify/svelte";
+    import { apiUrl } from "../../config";
 
     let isPlaying: boolean = false;
     let audioElemnt: HTMLAudioElement;
@@ -22,7 +23,7 @@
         loaded = false;
         try {
             
-            const res = await fetch(`http://localhost:8080/api/music/play/${$playing_song}`);
+            const res = await fetch(`${apiUrl}/api/music/play/${$playing_song}`);
             if (!res.ok) {
                 throw new Error("error fetching audio")
             }
@@ -43,7 +44,7 @@
     async function fetchMusicData() {
         try {
             
-            const res = await fetch(`http://localhost:8080/api/music/${$playing_song}`);
+            const res = await fetch(`${apiUrl}/api/music/${$playing_song}`);
             if (!res.ok) {
                 throw new Error("error fetching audio")
             }

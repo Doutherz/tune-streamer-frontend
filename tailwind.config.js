@@ -7,13 +7,13 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'custom-svg': "url('src/assets/layered-waves-haikei.svg')",
+        'custom-svg': "url('/layered-waves-haikei.svg')",
       },
       colors: {
-        primary: '#001220', // off white
-        secondary: '#80ffdb', // Orange
-        accent: '#2166c4', // Red
-        background: '#f5f5f5', // white
+        primary: '#001220',
+        secondary: '#80ffdb',
+        accent: '#2166c4',
+        background: '#f5f5f5',
         border: '#0f0b0b',
       }
     },

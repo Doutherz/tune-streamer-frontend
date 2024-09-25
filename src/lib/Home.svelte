@@ -2,7 +2,6 @@
     import MusicPlayer from './components/MusicPlayer.svelte';
     import Playlist from './components/Playlist.svelte';
     import SearchBar from './components/SearchBar.svelte';
-    import { playing_song } from './stores';
     let playlist_id = 4;
 
 </script>
